@@ -1,0 +1,347 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Pragma" content="no-cache"/>
+        <meta http-equiv="Cache-Control" content="no-cache"/>
+        <meta http-equiv="Expires" content="0"/>
+        <title>Blog EF - Entity FrameWork利用Database.SqlQuery&lt;T&gt;执行存储过程并返回参数</title>
+        
+    
+
+        <!--[if lt IE 9]>
+          <script src="/Scripts/html5shiv.js"></script>
+        <![endif]-->
+        <link href="/Themes/bs3/Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="/Content/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
+        <link href="/Content/SyntaxHighlighter/shCoreDefault.css" rel="stylesheet" type="text/css" />
+        <link href="/Themes/bs3/Content/css/style.css" rel="stylesheet" type="text/css" />
+        
+<script type="text/javascript">
+    var Urls = {};
+    Urls.RootPath = '/';
+    Urls.LoadingImgSmall = '/content/image/ajax-loader-small.gif';
+
+    var Config = {};
+    Config.DefaultLang = 'zh-cn';
+    Config.IsPagingAjax = 'True';
+</script>
+        <script src="/Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+        <script src="/Scripts/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+        <script src="/Themes/bs3/Content/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="/Content/js/lang_en-us.js" type="text/javascript"></script>
+        <script src="/Content/js/Web.Lang.en-us.js" type="text/javascript"></script>
+        <script src="/Themes/bs3/Content/js/site.js" type="text/javascript"></script>
+        <script src="/Scripts/jquery.pager.js" type="text/javascript"></script>
+        <script src="/Scripts/jquery.scrollUp.min.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <a href="#content" class="sr-only">Skip to main content</a>
+        <header role="banner" class="navbar navbar-inverse navbar-fixed-top bs-docs-nav">
+            <div class="container">
+<div  class="navbar navbar-inverse navbar-fixed-top">
+      <div  class="navbar-inner">
+                <div class="container">
+                  <a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar collapsed">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </a>
+                  <a href="/en-us" class="brand">Home</a>
+                  <div class="nav-collapse navbar-responsive-collapse in collapse" style="height: auto;">
+                      <ul class="nav mainNav navbar-nav">
+<li class="active hassub"><a href="http://localhost:2363/en-us/cate/60">MVC&EF<b class="menuarrow"></b></a>
+<ul class="firstSubNav subNav">
+<li><a href="http://localhost:2363/en-us/cate/65">MVC</a>
+</li>
+<li><a href="http://localhost:2363/en-us/cate/66">EF</a>
+</li>
+</ul>
+</li>
+<li class="hassub"><a href="http://localhost:2363/en-us/cate/61">Source<b class="menuarrow"></b></a>
+<ul class="firstSubNav subNav">
+<li class="hassub"><a href="http://localhost:2363/en-us/cate/67">后台<b class="menuarrow"></b></a>
+<ul class="subNav">
+<li><a href="http://localhost:2363/en-us/cate/72">.net webform</a>
+</li>
+<li><a href="http://localhost:2363/en-us/cate/73">.net mvc</a>
+</li>
+</ul>
+</li>
+<li class="hassub"><a href="http://localhost:2363/en-us/cate/68">前端<b class="menuarrow"></b></a>
+<ul class="subNav">
+<li><a href="http://localhost:2363/en-us/cate/69">javascript&jquery</a>
+</li>
+<li><a href="http://localhost:2363/en-us/cate/70">angularjs</a>
+</li>
+<li><a href="http://localhost:2363/en-us/cate/71">seajs</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="hassub"><a href="http://localhost:2363/en-us/cate/62">Life Record<b class="menuarrow"></b></a>
+<ul class="firstSubNav subNav">
+<li><a href="http://localhost:2363/en-us/cate/63">travel</a>
+</li>
+<li><a href="http://localhost:2363/en-us/cate/64">from net</a>
+</li>
+<li><a href="http://localhost:2363/en-us/cate/75">sport</a>
+</li>
+</ul>
+</li>
+<li><a href="http://localhost:2363/en-us/cate/74">Films&TV</a>
+</li>
+<li class="hassub"><a href="http://localhost:2363/en-us/cate/76">生活<b class="menuarrow"></b></a>
+<ul class="firstSubNav subNav">
+<li><a href="http://localhost:2363/en-us/cate/77">生活常识</a>
+</li>
+<li><a href="http://localhost:2363/en-us/cate/78">健康养生</a>
+</li>
+<li><a href="http://localhost:2363/en-us/cate/79">体育健身</a>
+</li>
+</ul>
+</li>
+</ul>
+
+                    <ul class="nav pull-right" id="logonAndLangInfo"></ul>
+                  </div>
+                </div>
+              </div>
+            </div>            </div>
+        </header>
+        
+        <div class="container main-content">
+            
+<input type="hidden" value="10" id="ArticleId" name="ArticleId"/>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="breadcrumb">
+        <li><a href="/en-us">Home</a> <span class="divider">/</span></li>
+        <li><a href="http://localhost:2363/en-us/cate/60">MVC&EF</a> <span class="divider">/</span></li><li><a href="http://localhost:2363/en-us/cate/66">EF</a> <span class="divider">/</span></li>
+        <li class="active">Entity FrameWork利用Database.SqlQuery&lt;T&gt;执行存储过程并返回参数</li>
+        </ul>
+    </div>
+    <div class="col-md-12">
+        <h3>Entity FrameWork利用Database.SqlQuery&lt;T&gt;执行存储过程并返回参数</h3>
+        <p class="article_meta">
+            <a href="http://localhost:2363/en-us/author/admin               ">admin</a>
+            posted on
+            Jan. 2, 2016 21:34
+            <span class="ui-icon ui-icon-folder-collapsed"></span>
+            <a href="http://localhost:2363/en-us/cate/66" >EF</a>
+            <span class="article_viewcount"></span>
+            <span class="article_commentcount"></span>
+        </p>
+        <div>Entity FrameWork利用Database.SqlQuery<T>执行存储过程并返回参数</div>
+        <div class="article_content"><p style="line-height:19.3846px;margin:10px auto;color:#333333;font-family:Georgia, 'Times New Roman', Times, sans-serif;white-space:normal;background-color:#FFFFFF;">
+	<span style="line-height:1.8;">&nbsp; &nbsp; &nbsp;&nbsp;EF对存储过程的支持并不完善。存在以下问题：</span><br />
+<br />
+<span style="line-height:1.8;">&nbsp; &nbsp; &nbsp; &nbsp; EF不支持存储过程返回多表联合查询的结果集。</span><br />
+<br />
+<span style="line-height:1.8;">&nbsp; &nbsp; &nbsp; &nbsp; EF仅支持返回返回某个表的全部字段，以便转换成对应的实体。无法支持返回部分字段的情况。</span><br />
+<br />
+<span style="line-height:1.8;">&nbsp; &nbsp; &nbsp; &nbsp; 虽然可以正常导入返回标量值的存储过程，但是却没有为我们自动生成相应的实体.cs代码，我们还是无法在代码中直接调用或使用标量存储过程</span><br />
+<br />
+<span style="line-height:1.8;">&nbsp; &nbsp; &nbsp; &nbsp; EF不能直接支持存储过程中Output类型的参数。</span><br />
+<br />
+<span style="line-height:1.8;">&nbsp; &nbsp; &nbsp; &nbsp; 其他一些问题。</span><br />
+<br />
+今天我们利用EF执行sql语句的方式来执行存储过程，并得到OutPut的值。
+</p>
+<p style="line-height:19.3846px;margin:10px auto;color:#333333;font-family:Georgia, 'Times New Roman', Times, sans-serif;white-space:normal;background-color:#FFFFFF;">
+	首先新建存储过程：
+</p>
+<p style="line-height:19.3846px;margin:10px auto;color:#333333;font-family:Georgia, 'Times New Roman', Times, sans-serif;white-space:normal;background-color:#FFFFFF;">
+	<br />
+</p>
+<div class="cnblogs_Highlighter" style="color:#333333;font-family:Georgia, 'Times New Roman', Times, sans-serif;line-height:19.3846px;white-space:normal;background-color:#FFFFFF;">
+	<div id="highlighter_863470" class="syntaxhighlighter nogutter  sql" style="width:959.615px;margin:1em 0px !important;position:relative !important;overflow:auto !important;font-size:1em !important;">
+		<span style="white-space:nowrap;">Create PROCEDURE proc_testEF&nbsp;</span><br />
+<span style="white-space:nowrap;">&nbsp; (&nbsp;</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; @id int,&nbsp;</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; @voteCount int OUTPUT --返回值</span><br />
+<span style="white-space:nowrap;">&nbsp; )&nbsp;</span><br />
+<span style="white-space:nowrap;">&nbsp; AS</span><br />
+<span style="white-space:nowrap;">&nbsp; BEGIN</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; SELECT @voteCount = COUNT(*)&nbsp;</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; FROM ConfirmItem</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; WHERE ConfirmItemID = @id;&nbsp;</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; select * from ConfirmItem where ConfirmItemID=@id;</span><br />
+<span style="white-space:nowrap;">&nbsp; END</span><br />
+<span style="white-space:nowrap;">&nbsp;&nbsp;</span><br />
+<span style="white-space:nowrap;">然后写EF调用方法：</span><br />
+<br />
+<span style="white-space:nowrap;">using (DBEntities context = new DBEntities())</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var idParam = new System.Data.SqlClient.SqlParameter</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ParameterName = "@id",</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Value = 1</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;};</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var votesParam = new System.Data.SqlClient.SqlParameter</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ParameterName = "@voteCount",</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Value = 0,</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Direction = ParameterDirection.Output</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;};</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var results = context.Database.SqlQuery&lt;Models.ConfirmItem&gt;(</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"proc_testEF @id, @voteCount out",</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; idParam,</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;votesParam);</span><br />
+<span style="white-space:nowrap;">&nbsp;</span><br />
+<span style="white-space:nowrap;">&nbsp;</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var person = results.Single();</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var votes = (int)votesParam.Value; //得到OutPut类型值</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return votes;</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span><br />
+<span style="white-space:nowrap;">测试多次，没有什么问题；最后我对方法进行封装：</span><br />
+<span style="white-space:nowrap;"><br />
+</span><br />
+<span style="white-space:nowrap;"><br />
+</span><br />
+<span style="white-space:nowrap;"><br />
+</span><br />
+<span style="white-space:nowrap;">/// &lt;summary&gt; &nbsp;</span><br />
+<span style="white-space:nowrap;">/// 执行原始SQL命令 &nbsp;</span><br />
+<span style="white-space:nowrap;">/// &lt;/summary&gt; &nbsp;</span><br />
+<span style="white-space:nowrap;">/// &lt;param name="commandText"&gt;SQL命令&lt;/param&gt; &nbsp;</span><br />
+<span style="white-space:nowrap;">/// &lt;param name="parameters"&gt;参数&lt;/param&gt; &nbsp;</span><br />
+<span style="white-space:nowrap;">/// &lt;returns&gt;影响的记录数&lt;/returns&gt; &nbsp;</span><br />
+<span style="white-space:nowrap;">public Object[] ExecuteSqlNonQuery&lt;T&gt;(string commandText, params Object[] parameters)</span><br />
+<span style="white-space:nowrap;">{</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; using (DBEntities context = new DBEntities())</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; {</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; var results = context.Database.SqlQuery&lt;T&gt;(commandText, parameters);</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; results.Single();</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; return parameters;</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; }</span><br />
+<span style="white-space:nowrap;">}</span><br />
+<span style="white-space:nowrap;">调用方式：</span><br />
+<span style="white-space:nowrap;"><br />
+</span><br />
+<span style="white-space:nowrap;"><br />
+</span><br />
+<span style="white-space:nowrap;"><br />
+</span><br />
+<span style="white-space:nowrap;">var idParam = new System.Data.SqlClient.SqlParameter</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ParameterName = "@id",</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Value = 1</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;};</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;var votesParam = new System.Data.SqlClient.SqlParameter</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ParameterName = "@voteCount",</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Value = 0,</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Direction = ParameterDirection.Output</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;};</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.Data.SqlClient.SqlParameter[] parm = {&nbsp;</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;idParam,</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;votesParam</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;};</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;parm = (System.Data.SqlClient.SqlParameter[])new BLL.Usual.ConfirmItemManager().ExecuteSqlNonQuery&lt;Models.ConfirmItem&gt;("proc_testEF @id, @voteCount out", parm);</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><br />
+<span style="white-space:nowrap;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;string s = parm[1].Value.ToString();</span><br />
+<br />
+	</div>
+</div>
+<div class="cnblogs_Highlighter" style="color:#333333;font-family:Georgia, 'Times New Roman', Times, sans-serif;line-height:19.3846px;white-space:normal;background-color:#FFFFFF;">
+</div>
+<p style="line-height:19.3846px;margin:10px auto;color:#333333;font-family:Georgia, 'Times New Roman', Times, sans-serif;white-space:normal;background-color:#FFFFFF;">
+	当然还有其它的方式，只是觉得这种简单方便，比起添加实体模型来说，要方便很多！
+</p></div>
+        <div class="article_tag text-muted">
+                <a class="grayBoxA" href="http://localhost:2363/en-us/tag/EF">EF</a>
+                <a class="grayBoxA" href="http://localhost:2363/en-us/tag/MVC">MVC</a>
+                <a class="grayBoxA" href="http://localhost:2363/en-us/tag/sql%e6%95%b0%e6%8d%ae%e6%9f%a5%e8%af%a2">sql数据查询</a>
+        </div>
+        <div class="vote articlevote clearfix" voteid="10">
+            <ul>
+                <li>Bump :</li>
+                <li class="vote_favor vote_favor_value"></li>
+                <li class="gap"></li>
+                <li>Stamp :</li>
+                <li class="vote_against vote_against_value"></li>
+                <li class="vote_tip"></li>
+            </ul>
+        </div>
+        <div class="article_link"></div>
+        <div class="article_comment">
+            <input type="hidden" value="desc" id="CommentOrderType" name="CommentOrderType"/>
+            <a name="commentA"></a>
+            <div id="commentlist">
+            </div>
+            <div id="commentform">
+                <a name="commentFormA"></a>
+                <h4>Add Comment</h4>
+                <div id="commentFormWrap"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" value="" id="current-comment" name="current-comment"/>
+
+<div id="modalbackdroptrue" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Delete Comment</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                Are you sure to delete this item?
+            </p>
+        </div>
+        <div class="modal-footer">
+            <a data-dismiss="modal" class="btn btn-default" id="comment-delete-no">No</a>
+            <a class="btn btn-primary" id="comment-delete-yes">Yes</a>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+        </div>
+        <footer>
+            <div class="container">
+                Copyright &copy; JeryCompany.xx All Rights Reserved
+            </div>
+        </footer>
+<div id="themeSwitch">
+    <a id="viewThemeList"><span class="ui-icon ui-icon-gear"></span></a>
+    <div class="popover right nodisplay" id="themlistWrap">
+        <div class="arrow"></div>
+        <button class="close" type="button">×</button>
+        <h3 class="popover-title clearfix">
+            Theme Setting
+        </h3>
+        <div class="popover-content">
+            <p class="currenttheme">Default</p>
+            <ul>
+                    <li><span class="themeindex">1</span><a href="?theme=bs3">BootStrap3</a></li>
+            </ul>
+        </div>
+    </div>
+</div>        
+    <script src="/Scripts/SyntaxHighlighter/scripts/shCore.js" type="text/javascript"></script>
+    <script src="/Scripts/SyntaxHighlighter/scripts/shBrush.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.article_link').html(loadingImgSmall);
+            GetArticleAjaxInfo();
+            GetCommentForm();
+            SyntaxHighlighter.all();
+        });
+    </script>
+
+    
+<!-- Visual Studio Browser Link -->
+<script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Unknown"}
+</script>
+<script type="text/javascript" src="http://localhost:15709/9433a4c28696448597ff3211ca67066f/browserLink" async="async"></script>
+<!-- End Browser Link -->
+
+</body>
+</html>

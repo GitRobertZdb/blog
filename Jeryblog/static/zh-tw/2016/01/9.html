@@ -1,0 +1,381 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html>
+    <head>
+        <meta/>
+        <meta charset="utf-8" />
+        <meta http-equiv="Pragma" content="no-cache"/>
+        <meta http-equiv="Cache-Control" content="no-cache"/>
+        <meta http-equiv="Expires" content="0"/>
+        <title>Blog EF - EF批量插入多表数据优化</title>
+        
+    
+
+        <!--[if lt IE 9]>
+            <script src="/Scripts/html5shiv.js"></script>
+        <![endif]-->
+        <link href="/Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="/Content/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+        <link href="/Content/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
+        <link href="/Content/SyntaxHighlighter/shCoreDefault.css" rel="stylesheet" type="text/css" />
+        <link href="/Views/Content/css/style.css" rel="stylesheet" type="text/css" />
+        
+<script type="text/javascript">
+    var Urls = {};
+    Urls.RootPath = '/';
+    Urls.LoadingImgSmall = '/content/image/ajax-loader-small.gif';
+
+    var Config = {};
+    Config.DefaultLang = 'zh-cn';
+    Config.IsPagingAjax = 'True';
+</script>
+        <script src="/Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+        <script src="/Scripts/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+        <script src="/Scripts/bootstrap.min.js" type="text/javascript"></script>
+        <script src="/Content/js/lang_zh-tw.js" type="text/javascript"></script>
+        <script src="/Content/js/Web.Lang.zh-tw.js" type="text/javascript"></script>
+        <script src="/Views/Content/js/site.js" type="text/javascript"></script>
+        <script src="/Scripts/jquery.pager.js" type="text/javascript"></script>
+        <script src="/Scripts/jquery.scrollUp.min.js" type="text/javascript"></script>
+            <script src="/Scripts/jquery.ui.datepicker-zh-tw.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <header class="jumbotron">
+            <div class="container">
+<div  class="navbar navbar-inverse navbar-fixed-top">
+      <div  class="navbar-inner">
+                <div class="container">
+                  <a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar collapsed">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </a>
+                  <a href="/zh-tw" class="brand">首頁</a>
+                  <div class="nav-collapse navbar-responsive-collapse in collapse" style="height: auto;">
+                      <ul class="nav mainNav navbar-nav">
+<li class="active hassub"><a href="http://localhost:17943/zh-tw/cate/60">MVC&EF<b class="menuarrow"></b></a>
+<ul class="firstSubNav subNav">
+<li><a href="http://localhost:17943/zh-tw/cate/65">MVC</a>
+</li>
+<li><a href="http://localhost:17943/zh-tw/cate/66">EF</a>
+</li>
+</ul>
+</li>
+<li class="hassub"><a href="http://localhost:17943/zh-tw/cate/61">Source<b class="menuarrow"></b></a>
+<ul class="firstSubNav subNav">
+<li class="hassub"><a href="http://localhost:17943/zh-tw/cate/67">后台<b class="menuarrow"></b></a>
+<ul class="subNav">
+<li><a href="http://localhost:17943/zh-tw/cate/72">.net webform</a>
+</li>
+<li><a href="http://localhost:17943/zh-tw/cate/73">.net mvc</a>
+</li>
+</ul>
+</li>
+<li class="hassub"><a href="http://localhost:17943/zh-tw/cate/68">前端<b class="menuarrow"></b></a>
+<ul class="subNav">
+<li><a href="http://localhost:17943/zh-tw/cate/69">javascript&jquery</a>
+</li>
+<li><a href="http://localhost:17943/zh-tw/cate/70">angularjs</a>
+</li>
+<li><a href="http://localhost:17943/zh-tw/cate/71">seajs</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="hassub"><a href="http://localhost:17943/zh-tw/cate/62">Life Record<b class="menuarrow"></b></a>
+<ul class="firstSubNav subNav">
+<li><a href="http://localhost:17943/zh-tw/cate/63">travel</a>
+</li>
+<li><a href="http://localhost:17943/zh-tw/cate/64">from net</a>
+</li>
+<li><a href="http://localhost:17943/zh-tw/cate/75">sport</a>
+</li>
+</ul>
+</li>
+<li><a href="http://localhost:17943/zh-tw/cate/74">Films&TV</a>
+</li>
+<li class="hassub"><a href="http://localhost:17943/zh-tw/cate/76">生活<b class="menuarrow"></b></a>
+<ul class="firstSubNav subNav">
+<li><a href="http://localhost:17943/zh-tw/cate/77">生活常识</a>
+</li>
+<li><a href="http://localhost:17943/zh-tw/cate/78">健康养生</a>
+</li>
+<li><a href="http://localhost:17943/zh-tw/cate/79">体育健身</a>
+</li>
+</ul>
+</li>
+</ul>
+
+                    <ul class="nav pull-right" id="logonAndLangInfo"></ul>
+                  </div>
+                </div>
+              </div>
+            </div>            </div>
+        </header>
+        <div class="container">
+            
+
+<input type="hidden" value="9" id="ArticleId" name="ArticleId"/>
+<div class="row">
+    <div class="span12">
+        <ul class="breadcrumb">
+        <li><a href="/zh-tw">首頁</a> <span class="divider">/</span></li>
+        <li><a href="http://localhost:17943/zh-tw/cate/60">MVC&EF</a> <span class="divider">/</span></li><li><a href="http://localhost:17943/zh-tw/cate/66">EF</a> <span class="divider">/</span></li>
+        <li class="active">EF批量插入多表数据优化</li>
+        </ul>
+    </div>
+    <div class="span12">
+        <h3>EF批量插入多表数据优化</h3>
+        <p class="article_meta">
+            <a href="http://localhost:17943/zh-tw/author/admin               ">admin</a>
+            發表於
+            2016-01-02 21:31
+            <span class="ui-icon ui-icon-folder-collapsed"></span>
+            <a href="http://localhost:17943/zh-tw/cate/66" >EF</a>
+            <span class="article_viewcount"></span>
+            <span class="article_commentcount"></span>
+        </p>
+        <div>EF批量插入多表数据优化</div>
+        <div class="article_content"><p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	&nbsp;&nbsp;最近遇到两个和数据迁移相关的项目，均遇到需要性能优化的问题，这里拿第二个项目的一个小优化过程与大家分享，技术并不高深，我注重的是解决问题的过程。我的方案是有业务背景以及技术背景限制的，不一定适合其它项目，优化是相对的。
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	<img src="http://localhost:17943/upload/article/20160102213117_4392.jpg" alt="" width="134" height="118" style="max-width:1000px;" /> 
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	<br />
+&nbsp; 业务场景：我们需要迁移一批老的合同订单数据，其有一个合同的订单数为519条，迁移到新表中会涉及到主要的4个表，就是说519条老数据，会变成519*4。<br />
+&nbsp;&nbsp;<br />
+&nbsp; 技术背景：数据库是mysql,后台采用的是微软的EF
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	<br />
+&nbsp;&nbsp;<img src="http://localhost:17943/upload/article/20160102213119_5233.jpg" alt="" width="129" height="112" style="max-width:1000px;" /> 
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	<br />
+&nbsp; 问题：迁移这批订单当时最好的性能方案是14秒(未优化前是分钟级别)，我们总共有400000订单，算下最理想状态下的总时间：=(14/519)*400000/3600=3小时，再算下取数据，转换数据的时间，基本要4小时。如果中途有异常，这个时间可能需要一夜甚至更长的时间才能迁移完，这真正恶梦。<br />
+&nbsp;&nbsp;<br />
+&nbsp; 先来看看优化前：优化前导519个合同是分钟级别的，看下代码后我的方案是分三步：
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	<img src="http://localhost:17943/upload/article/20160102213120_0514.jpg" alt="" width="150" height="194" style="max-width:1000px;" /><br />
+&nbsp; 1：按批次，比如10个合同一批来操作，将后续需要的数据全部取出来。原方案是用到哪查到哪，试想400000的订单还不查个一天两天的。<br />
+&nbsp; 2：转换数据，将源数据转换成新的对象集合，此处不操作数据库。<br />
+&nbsp; 3：批量插入数据，将转换后校验无误的数据导入数据库，原方案是逻辑到哪，哪就插入数据库。不便于定位性能瓶颈也不方便进行有针对性的优化。<br />
+&nbsp;&nbsp;<br />
+&nbsp; 根据以上三个步骤，我们就很容易精确定位是哪方面慢了，是查询数据库慢，转换数据慢，还是插入数据库慢。<br />
+&nbsp;&nbsp;<br />
+&nbsp; 经过此方面调整后的结果：<br />
+&nbsp; 1：一次性读取数据后，性能明显提升，降低了数据库读取次数，享受到了批量取数据的好处；<br />
+&nbsp; 2：定位到性能瓶颈在于数据库插入，总时间15秒，保存数据花了14秒
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	<br />
+&nbsp;&nbsp;<img src="http://localhost:17943/upload/article/20160102213120_5464.jpg" alt="" width="131" height="113" style="max-width:1000px;" /> 
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	<br />
+&nbsp; 疑惑：我对保存519*4条数据需要14秒的结果不满意，我坚定认为数据库插入如此小数量级的数量不需要这么长的时间。再次分析，发现我们需要保存多张表的数据，且相互之间存在依赖关系，即第二张表的数据需要第一张表插入后的主键，这样我们在写EF时，会出现多条SaveChange的方法。519个订单做循环，SaveChange的总次数：519*3。<br />
+&nbsp;&nbsp;<br />
+&nbsp; 改造：分三次数据库操作<br />
+&nbsp; 1：先全量保存第一个被依赖的表，此时由于EF的数据追踪功能，插入数据库后，对象上会自动赋值主键信息；<br />
+&nbsp; 2：再全量保存第二个被依赖的表，由于被依赖的表在第一步已经更新成功，此处能够成功获取到外键；<br />
+&nbsp; 3：最后全量保存第三被依赖的表。
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	<br />
+&nbsp;&nbsp;<img src="http://localhost:17943/upload/article/20160102213120_8534.jpg" alt="" width="147" height="97" style="max-width:1000px;" /> 
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	<br />
+&nbsp; 此方案的SaveChange次数降低到3次，执行时间变更5.5秒，性能提高接近200%。<br />
+&nbsp;&nbsp;<br />
+&nbsp;&nbsp;<img src="http://localhost:17943/upload/article/20160102213121_7555.jpg" alt="" width="178" height="132" style="max-width:1000px;" /><br />
+&nbsp; 数据库事务，如果我们的操作加上事务会怎样？我们从优化前的版本开始看(不是上面提到的分打开三次数据库批量操作)：主要利用TransactionScope来完成
+</p>
+<div class="cnblogs_Highlighter sh-gutter" style="color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;line-height:15px;white-space:normal;background-color:#FFFFFF;">
+	<div id="highlighter_797305" class="syntaxhighlighter  csharp" style="width:1143.08px;margin:1em 0px !important;position:relative !important;overflow:auto !important;font-size:1em !important;">
+		<table border="0" cellpadding="0" cellspacing="0" style="border:1px solid silver;width:1143.08px;word-break:break-word;border-radius:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.1em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;background:none !important;" class="ke-zeroborder">
+			<tbody style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.1em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;background:none !important;">
+				<tr style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.1em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;background:none !important;">
+					<td class="gutter" style="border:1px solid silver;padding:3px;border-collapse:collapse;color:#AFAFAF !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;border-radius:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.1em !important;margin:0px !important;outline:0px !important;overflow:visible !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:35px !important;box-sizing:content-box !important;min-height:auto !important;background:none !important;">
+						<div class="line number1 index0 alt2" style="border-radius:0px !important;border-width:0px 2px 0px 0px !important;border-right-style:solid !important;border-right-color:#6CE26C !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px 0.5em !important;position:static !important;right:auto !important;text-align:right !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;white-space:nowrap !important;background:none #F4F4F4 !important;">
+							1
+						</div>
+						<div class="line number2 index1 alt1" style="border-radius:0px !important;border-width:0px 2px 0px 0px !important;border-right-style:solid !important;border-right-color:#6CE26C !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px 0.5em !important;position:static !important;right:auto !important;text-align:right !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;white-space:nowrap !important;background-image:none !important;background-attachment:initial !important;background-size:initial !important;background-origin:initial !important;background-clip:initial !important;background-position:initial !important;background-repeat:initial !important;">
+							2
+						</div>
+						<div class="line number3 index2 alt2" style="border-radius:0px !important;border-width:0px 2px 0px 0px !important;border-right-style:solid !important;border-right-color:#6CE26C !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px 0.5em !important;position:static !important;right:auto !important;text-align:right !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;white-space:nowrap !important;background:none #F4F4F4 !important;">
+							3
+						</div>
+						<div class="line number4 index3 alt1" style="border-radius:0px !important;border-width:0px 2px 0px 0px !important;border-right-style:solid !important;border-right-color:#6CE26C !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px 0.5em !important;position:static !important;right:auto !important;text-align:right !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;white-space:nowrap !important;background-image:none !important;background-attachment:initial !important;background-size:initial !important;background-origin:initial !important;background-clip:initial !important;background-position:initial !important;background-repeat:initial !important;">
+							4
+						</div>
+						<div class="line number5 index4 alt2" style="border-radius:0px !important;border-width:0px 2px 0px 0px !important;border-right-style:solid !important;border-right-color:#6CE26C !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px 0.5em !important;position:static !important;right:auto !important;text-align:right !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;white-space:nowrap !important;background:none #F4F4F4 !important;">
+							5
+						</div>
+						<div class="line number6 index5 alt1" style="border-radius:0px !important;border-width:0px 2px 0px 0px !important;border-right-style:solid !important;border-right-color:#6CE26C !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px 0.5em !important;position:static !important;right:auto !important;text-align:right !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;white-space:nowrap !important;background-image:none !important;background-attachment:initial !important;background-size:initial !important;background-origin:initial !important;background-clip:initial !important;background-position:initial !important;background-repeat:initial !important;">
+							6
+						</div>
+						<div class="line number7 index6 alt2" style="border-radius:0px !important;border-width:0px 2px 0px 0px !important;border-right-style:solid !important;border-right-color:#6CE26C !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px 0.5em !important;position:static !important;right:auto !important;text-align:right !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;white-space:nowrap !important;background:none #F4F4F4 !important;">
+							7
+						</div>
+					</td>
+					<td class="code" style="color:#454545;border:1px solid silver;padding:3px;border-collapse:collapse;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;border-radius:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.1em !important;margin:0px !important;outline:0px !important;overflow:visible !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;min-height:auto !important;background:none !important;">
+						<div class="container" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.1em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:relative !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;background:none !important;">
+							<div class="line number1 index0 alt2" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px 1em !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;white-space:nowrap !important;background:none #F4F4F4 !important;">
+								<code class="csharp keyword" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;color:#0000FF !important;background:none !important;">using</code>&nbsp;<code class="csharp plain" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;color:#000000 !important;background:none !important;">(</code><code class="csharp keyword" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;color:#0000FF !important;background:none !important;">var</code>&nbsp;<code class="csharp plain" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;color:#000000 !important;background:none !important;">trans =&nbsp;</code><code class="csharp keyword" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;color:#0000FF !important;background:none !important;">new</code>&nbsp;<code class="csharp plain" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;color:#000000 !important;background:none !important;">TransactionScope(TransactionScopeOption.Required,</code> 
+							</div>
+							<div class="line number2 index1 alt1" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px 1em !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;white-space:nowrap !important;background-image:none !important;background-attachment:initial !important;background-size:initial !important;background-origin:initial !important;background-clip:initial !important;background-position:initial !important;background-repeat:initial !important;">
+								<code class="csharp spaces" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;background:none !important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;color:#0000FF !important;background:none !important;">new</code>&nbsp;<code class="csharp plain" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;color:#000000 !important;background:none !important;">TransactionOptions()</code> 
+							</div>
+							<div class="line number3 index2 alt2" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px 1em !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;white-space:nowrap !important;background:none #F4F4F4 !important;">
+								<code class="csharp spaces" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;background:none !important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;color:#000000 !important;background:none !important;">{</code> 
+							</div>
+							<div class="line number4 index3 alt1" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px 1em !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;white-space:nowrap !important;background-image:none !important;background-attachment:initial !important;background-size:initial !important;background-origin:initial !important;background-clip:initial !important;background-position:initial !important;background-repeat:initial !important;">
+								<code class="csharp spaces" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;background:none !important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;color:#000000 !important;background:none !important;">Timeout =&nbsp;</code><code class="csharp keyword" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;color:#0000FF !important;background:none !important;">new</code>&nbsp;<code class="csharp plain" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;color:#000000 !important;background:none !important;">TimeSpan(0, 0, 240),</code> 
+							</div>
+							<div class="line number5 index4 alt2" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px 1em !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;white-space:nowrap !important;background:none #F4F4F4 !important;">
+								<code class="csharp spaces" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;background:none !important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;color:#000000 !important;background:none !important;">IsolationLevel =</code> 
+							</div>
+							<div class="line number6 index5 alt1" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px 1em !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;white-space:nowrap !important;background-image:none !important;background-attachment:initial !important;background-size:initial !important;background-origin:initial !important;background-clip:initial !important;background-position:initial !important;background-repeat:initial !important;">
+								<code class="csharp spaces" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;background:none !important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;color:#000000 !important;background:none !important;">System.Transactions.IsolationLevel.RepeatableRead</code> 
+							</div>
+							<div class="line number7 index6 alt2" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px 1em !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;white-space:nowrap !important;background:none #F4F4F4 !important;">
+								<code class="csharp spaces" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;background:none !important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain" style="border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;margin:0px !important;outline:0px !important;overflow:visible !important;padding:0px !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;color:#000000 !important;background:none !important;">}))</code> 
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	<br />
+&nbsp; 1：519*3次SaveChange,最外层嵌套一个大事务，不嵌套是58秒，嵌套了50秒，两者相关不大，如果是一个DbContext出现大量的SaveChange，有事务从结果来看性能更优化，具体原因不明，待调查。<br />
+&nbsp; 2：519*3次SaveChange,缩小事务范围，将事务放在循环体内部，结果变成14秒，看来小事务还是值得推荐的。<br />
+&nbsp;&nbsp;<br />
+&nbsp; 再看改造后的分三次数据库操作每次一次SaveChange的场景：外面嵌套一个大事务，嵌套是5.5秒，不嵌套是5.8，相差不大。
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	<br />
+&nbsp;&nbsp;<img src="http://localhost:17943/upload/article/20160102213121_8085.jpg" alt="" width="164" height="100" style="max-width:1000px;" /> 
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	<br />
+&nbsp; 单一职责，上面的批量插入数据库使用了三次打开数据库，每次只有一个SaveChange，那么在一个DbContext中操作调用三次SaveChange呢？<br />
+&nbsp; 在一个DbContext中做三次SaveChange是32秒，采用三个DbContext分开操作是5.5秒，结论是大批量数据插入，避免在同一DbContext中做多次SaveChange。
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	&nbsp;
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	&nbsp;&nbsp;<img src="http://localhost:17943/upload/article/20160102213121_9855.gif" alt="" width="132" height="157" style="max-width:1000px;" /> 
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	&nbsp; 结论：
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	&nbsp; 1：避免使用大的数据库事务，尽量控制在有需求时打开，不需要时及时关闭，它会锁定资源的；
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	&nbsp; 2：批量插入表数据，尽量避免在同一DbContext下做多次SaveChange操作；
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	&nbsp; 3：如果有大批数据需要插入表，尽量采用单表集中插入后再操作后续表，避免插入一条数据SaveChange一次；
+</p>
+<p style="line-height:15px;margin:10px auto;color:#4B4B4B;font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:13px;white-space:normal;background-color:#FFFFFF;">
+	&nbsp; 4：读取数据尽量按批量读取，避免取一条数据读取一次：查询100次单条记录与一次性查询100条记录是有很大差距的。
+</p></div>
+        <div class="article_tag muted">
+                <a class="grayBoxA" href="http://localhost:17943/zh-tw/tag/EF">EF</a>
+                <a class="grayBoxA" href="http://localhost:17943/zh-tw/tag/MVC">MVC</a>
+                <a class="grayBoxA" href="http://localhost:17943/zh-tw/tag/%e6%95%b0%e6%8d%ae%e4%bc%98%e5%8c%96">数据优化</a>
+        </div>
+        <div class="vote articlevote clearfix" voteid="9">
+            <ul>
+                <li>頂 :</li>
+                <li class="vote_favor vote_favor_value"></li>
+                <li class="gap"></li>
+                <li>踩 :</li>
+                <li class="vote_against vote_against_value"></li>
+                <li class="vote_tip"></li>
+            </ul>
+        </div>
+        <div class="article_link"></div>
+        <div class="article_comment">
+            <input type="hidden" value="desc" id="CommentOrderType" name="CommentOrderType"/>
+            <a name="commentA"></a>
+            <div id="commentlist">
+            </div>
+            <div id="commentform">
+                <a name="commentFormA"></a>
+                <h4>發表評論</h4>
+                <div id="commentFormWrap"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" value="" id="current-comment" name="current-comment"/>
+<div id="modalbackdroptrue" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>刪除評論</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            確定刪除選中項?
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-success fl" id="comment-delete-yes">是</a>
+        <a data-dismiss="modal" class="btn btn-danger fl" id="comment-delete-no">否</a>
+    </div>
+</div>
+
+
+        </div>
+        <footer>
+            <div class="container">
+                版权所有  &copy; xxxx_jery_company
+            </div>
+        </footer>
+<div id="themeSwitch">
+    <a id="viewThemeList"><span class="ui-icon ui-icon-gear"></span></a>
+    <div class="popover right nodisplay" id="themlistWrap">
+        <div class="arrow"></div>
+        <button class="close" type="button">×</button>
+        <h3 class="popover-title clearfix">
+            模板設置
+        </h3>
+        <div class="popover-content">
+            <p class="currenttheme">Default</p>
+            <ul>
+                    <li><span class="themeindex">1</span><a href="?theme=bs3">BootStrap3</a></li>
+            </ul>
+        </div>
+    </div>
+</div>        
+    <script src="/Scripts/SyntaxHighlighter/scripts/shCore.js" type="text/javascript"></script>
+    <script src="/Scripts/SyntaxHighlighter/scripts/shBrush.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.article_link').html(loadingImgSmall);
+            GetArticleAjaxInfo();
+            GetCommentForm();
+            SyntaxHighlighter.all();
+        });
+    </script>
+
+    
+<!-- Visual Studio Browser Link -->
+<script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Unknown"}
+</script>
+<script type="text/javascript" src="http://localhost:15709/9433a4c28696448597ff3211ca67066f/browserLink" async="async"></script>
+<!-- End Browser Link -->
+
+</body>
+</html>

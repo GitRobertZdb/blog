@@ -1,0 +1,466 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        
+    
+
+        <link href="/Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="/Content/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+        <link href="/Content/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
+        <link href="/Content/SyntaxHighlighter/shCoreDefault.css" rel="stylesheet" type="text/css" />
+        <link href="/Views/Content/css/style.css" rel="stylesheet" type="text/css" />
+        
+<script type="text/javascript">
+    var Urls = {};
+    Urls.RootPath = '/';
+    Urls.LoadingImgSmall = '/content/image/ajax-loader-small.gif';
+
+    var Config = {};
+    Config.DefaultLang = 'zh-cn';
+    Config.IsPagingAjax = 'True';
+</script>
+        <script src="/Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+        <script src="/Scripts/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+        <script src="/Scripts/bootstrap.min.js" type="text/javascript"></script>
+        <script src="/Content/js/lang_zh-tw.js" type="text/javascript"></script>
+        <script src="/Content/js/Web.Lang.zh-tw.js" type="text/javascript"></script>
+        <script src="/Views/Content/js/site.js" type="text/javascript"></script>
+        <script src="/Scripts/jquery.pager.js" type="text/javascript"></script>
+        <script src="/Scripts/jquery.scrollUp.min.js" type="text/javascript"></script>
+            <script src="/Scripts/jquery.ui.datepicker-zh-tw.js" type="text/javascript"></script>
+    </head>
+    <body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+                <div class="container">
+                  <a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar collapsed">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </a>
+                  <a href="/" class="brand">首頁</a>
+                  <div class="nav-collapse navbar-responsive-collapse in collapse" style="height: auto;">
+                    <ul class="nav">
+                      <ul class="nav mainNav">
+<li class="active hassub"><a href="http://localhost:2363/zh-tw/cate/60">MVC&EF<b class="menuarrow"></b></a>
+<ul class="firstSubNav subNav">
+<li><a href="http://localhost:2363/zh-tw/cate/65">MVC</a>
+</li>
+<li><a href="http://localhost:2363/zh-tw/cate/66">EF</a>
+</li>
+</ul>
+</li>
+<li class="hassub"><a href="http://localhost:2363/zh-tw/cate/61">Source<b class="menuarrow"></b></a>
+<ul class="firstSubNav subNav">
+<li class="hassub"><a href="http://localhost:2363/zh-tw/cate/67">后台<b class="menuarrow"></b></a>
+<ul class="subNav">
+<li><a href="http://localhost:2363/zh-tw/cate/72">.net webform</a>
+</li>
+<li><a href="http://localhost:2363/zh-tw/cate/73">.net mvc</a>
+</li>
+</ul>
+</li>
+<li class="hassub"><a href="http://localhost:2363/zh-tw/cate/68">前端<b class="menuarrow"></b></a>
+<ul class="subNav">
+<li><a href="http://localhost:2363/zh-tw/cate/69">javascript&jquery</a>
+</li>
+<li><a href="http://localhost:2363/zh-tw/cate/70">angularjs</a>
+</li>
+<li><a href="http://localhost:2363/zh-tw/cate/71">seajs</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="hassub"><a href="http://localhost:2363/zh-tw/cate/62">life history<b class="menuarrow"></b></a>
+<ul class="firstSubNav subNav">
+<li><a href="http://localhost:2363/zh-tw/cate/63">travel</a>
+</li>
+<li><a href="http://localhost:2363/zh-tw/cate/64">from net</a>
+</li>
+</ul>
+</li>
+<li><a href="http://localhost:2363/zh-tw/cate/74">Films&TV</a>
+</li>
+</ul>
+
+                    </ul>
+                    <ul class="nav pull-right" id="logonAndLangInfo"></ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+        <header class="jumbotron">
+            <div class="container">
+            </div>
+        </header>
+        <div class="container">
+            
+
+<input type="hidden" value="2" id="ArticleId" name="ArticleId"/>
+<div class="row">
+    <div class="span12">
+        <ul class="breadcrumb">
+        <li><a href="/zh-tw">首頁</a> <span class="divider">/</span></li>
+        <li><a href="http://localhost:2363/zh-tw/cate/60">MVC&EF</a> <span class="divider">/</span></li><li><a href="http://localhost:2363/zh-tw/cate/66">EF</a> <span class="divider">/</span></li>
+        <li class="active">code first migration 生成数据库</li>
+        </ul>
+    </div>
+    <div class="span12">
+        <h3>code first migration 生成数据库</h3>
+        <p class="article_meta">
+            <a href="http://localhost:2363/zh-tw/author/admin               ">admin</a>
+            發表於
+            2016-01-02 13:44
+            <span class="ui-icon ui-icon-folder-collapsed"></span>
+            <a href="http://localhost:2363/zh-tw/cate/66" >EF</a>
+            <span class="article_viewcount"></span>
+            <span class="article_commentcount"></span>
+        </p>
+        <div>EF Code First Migrations数据库迁移, code first生成数据库</div>
+        <div class="article_content"><h1 class="postTitle" style="margin:20px 0px 10px;padding:0px;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#DDDDDD;font-size:14px;font-family:Verdana, Arial, Helvetica, sans-serif;white-space:normal;background-color:#FFFFFF;">
+	<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/libingql/p/3330880.html" style="margin:0px;padding:0px;text-decoration:none;color:#333333;">EF Code First Migrations数据库迁移</a> 
+</h1>
+<div class="clear" style="margin:0px;padding:0px;clear:both;color:#333333;font-family:Verdana, Arial, Helvetica, sans-serif;font-size:13.3333px;line-height:18.4615px;white-space:normal;background-color:#FFFFFF;">
+</div>
+<div class="postBody" style="margin:0px;padding:0px;color:#333333;font-family:Verdana, Arial, Helvetica, sans-serif;font-size:13.3333px;line-height:18.4615px;white-space:normal;background-color:#FFFFFF;">
+	<div id="cnblogs_post_body" style="margin:0px 0px 20px;padding:0px;word-break:break-word;">
+		<p style="margin:10px auto;padding:0px;">
+			<strong style="margin:0px;padding:0px;">1、EF Code First创建数据库</strong> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			新建控制台应用程序Portal，通过程序包管理器控制台添加EntityFramework。
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			在程序包管理器控制台中执行以下语句，安装EntityFramework。
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;">PM&gt; Install-Package EntityFramework</pre>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			安装成功后，界面提示如下图：
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			<img src="http://localhost:2363/upload/article/20160102134423_0914.png" alt="" style="margin:0px;padding:0px;max-width:1000px;" /> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			&nbsp;　　在新建的Portal控制台应用程序中添加两个实体类，代码结构如下：
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			<img src="http://localhost:2363/upload/article/20160102134424_4465.png" alt="" style="margin:0px;padding:0px;max-width:1000px;" /> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			其中，类文件PortalContext.cs的代码如下：
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+			<div class="cnblogs_code_toolbar" style="margin:5px 0px 0px;padding:0px;background-color:#F5F5F5;">
+				<span class="cnblogs_code_copy" style="margin:0px;padding:0px 5px 0px 0px;font-size:12px !important;line-height:1.5 !important;"><a title="复制代码" style="margin:0px;padding:0px;color:#E47911;border:none !important;"><img src="http://localhost:2363/upload/article/20160102134424_6045.gif" alt="复制代码" style="margin:0px;padding:0px;max-width:1000px;border-style:none !important;border-width:initial !important;" /></a></span> 
+			</div>
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;"><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">using</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> System; </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">using</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> System.Collections.Generic; </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">using</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> System.Linq; </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">using</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> System.Text; </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">using</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> System.Data.Entity; </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">using</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> System.Data.Entity.Infrastructure; </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">using</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> Portal.Entities; </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">using</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> Portal.Mapping; </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">namespace</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> Portal
+{ </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">public</span> <span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">class</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> PortalContext : DbContext
+    { </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">static</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> PortalContext()
+        {
+            Database.SetInitializer(</span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">new</span> DropCreateDatabaseIfModelChanges&lt;PortalContext&gt;<span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;">());
+        } </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">public</span> DbSet&lt;Province&gt; Provinces { <span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">get</span>; <span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">set</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;">; } </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">public</span> DbSet&lt;Category&gt; Categories { <span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">get</span>; <span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">set</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;">; } </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">protected</span> <span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">override</span> <span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">void</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(</span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">new</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> ProvinceMap());
+            modelBuilder.Configurations.Add(</span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">new</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> CategoryMap());
+        }
+    }
+}</span></pre>
+			<div class="cnblogs_code_toolbar" style="margin:5px 0px 0px;padding:0px;background-color:#F5F5F5;">
+				<span class="cnblogs_code_copy" style="margin:0px;padding:0px 5px 0px 0px;font-size:12px !important;line-height:1.5 !important;"><a title="复制代码" style="margin:0px;padding:0px;color:#E47911;border:none !important;"><img src="http://localhost:2363/upload/article/20160102134424_6045.gif" alt="复制代码" style="margin:0px;padding:0px;max-width:1000px;border-style:none !important;border-width:initial !important;" /></a></span> 
+			</div>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			在静态构造函数中，设置了当数据库模型发生改变时，则删除当前数据库，重建新的数据库。
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			代码执行后，生成的数据库：
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			&nbsp;<img src="http://localhost:2363/upload/article/20160102134424_7575.png" alt="" style="margin:0px;padding:0px;max-width:1000px;" /> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			<strong style="margin:0px;padding:0px;">2、EF Code First数据库迁移</strong> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			2.1、生成数据库
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			修改类文件PortalContext.cs的静态构造函数，取消当数据库模型发生改变时删除当前数据库重建新数据库的设置。
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;"><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">static</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> PortalContext()
+{
+    Database.SetInitializer</span>&lt;PortalContext&gt;(<span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">null</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;">);
+}</span></pre>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			&nbsp;　　1&gt;、在程序包管理器控制台，执行语句：
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;">PM&gt; Enable-Migrations -EnableAutomaticMigrations</pre>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			&nbsp;<img src="http://localhost:2363/upload/article/20160102134425_1646.png" alt="" style="margin:0px;padding:0px;max-width:1000px;" /> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			执行成功后，Portal控制台应用程序代码结构中，添加Migrations文件夹，并生成类文件Configuration.cs。
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			<img src="http://localhost:2363/upload/article/20160102134425_1946.png" alt="" style="margin:0px;padding:0px;max-width:1000px;" /> 
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+			<div class="cnblogs_code_toolbar" style="margin:5px 0px 0px;padding:0px;background-color:#F5F5F5;">
+				<span class="cnblogs_code_copy" style="margin:0px;padding:0px 5px 0px 0px;font-size:12px !important;line-height:1.5 !important;"><a title="复制代码" style="margin:0px;padding:0px;color:#E47911;border:none !important;"><img src="http://localhost:2363/upload/article/20160102134424_6045.gif" alt="复制代码" style="margin:0px;padding:0px;max-width:1000px;border-style:none !important;border-width:initial !important;" /></a></span> 
+			</div>
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;"><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">namespace</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> Portal.Migrations
+{ </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">using</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> System; </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">using</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> System.Data.Entity; </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">using</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> System.Data.Entity.Migrations; </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">using</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> System.Linq; </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">internal</span> <span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">sealed</span> <span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">class</span> Configuration : DbMigrationsConfiguration&lt;Portal.PortalContext&gt;<span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> { </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">public</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> Configuration()
+        {
+            AutomaticMigrationsEnabled </span>= <span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">true</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;">;
+        } </span><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">protected</span> <span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">override</span> <span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">void</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> Seed(Portal.PortalContext context)
+        { </span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;">//</span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;"> This method will be called after migrating to the latest version. </span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;">//</span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;"> You can use the DbSet&lt;T&gt;.AddOrUpdate() helper extension method </span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;">//</span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;"> to avoid creating duplicate seed data. E.g. </span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;">//</span> <span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;">//</span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;"> context.People.AddOrUpdate( </span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;">//</span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;"> p =&gt; p.FullName, </span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;">//</span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;"> new Person { FullName = "Andrew Peters" }, </span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;">//</span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;"> new Person { FullName = "Brice Lambson" }, </span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;">//</span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;"> new Person { FullName = "Rowan Miller" } </span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;">//</span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;"> ); </span><span style="margin:0px;padding:0px;color:#008000;font-size:12px !important;line-height:1.5 !important;">// </span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> }
+    }
+}</span></pre>
+			<div class="cnblogs_code_toolbar" style="margin:5px 0px 0px;padding:0px;background-color:#F5F5F5;">
+				<span class="cnblogs_code_copy" style="margin:0px;padding:0px 5px 0px 0px;font-size:12px !important;line-height:1.5 !important;"><a title="复制代码" style="margin:0px;padding:0px;color:#E47911;border:none !important;"><img src="http://localhost:2363/upload/article/20160102134424_6045.gif" alt="复制代码" style="margin:0px;padding:0px;max-width:1000px;border-style:none !important;border-width:initial !important;" /></a></span> 
+			</div>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			&nbsp;　　2&gt;、在程序包管理器控制台，执行语句：
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;">PM&gt; Add-Migration InitialCreate</pre>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			<img src="http://localhost:2363/upload/article/20160102134425_4406.png" alt="" style="margin:0px;padding:0px;max-width:1000px;" /> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			执行成功后，在Migrations文件夹中新增类文件201309201556388_InitialCreate.cs
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			<img src="http://localhost:2363/upload/article/20160102134425_4686.png" alt="" style="margin:0px;padding:0px;max-width:1000px;" /> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			3&gt;、在程序包管理器控制台，执行语句：
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;">PM&gt; Update-Database -Verbose</pre>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			执行结果生成与上面一致的数据库
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			<img src="http://localhost:2363/upload/article/20160102134426_2956.png" alt="" style="margin:0px;padding:0px;max-width:1000px;" /> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			4&gt;、在数据库模型中添加City类，执行程序包管理器控制台语句，Migrations文件夹中新增类文件201309201643300_AddCity.cs。
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;">PM&gt; Add-Migration AddCity</pre>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			再次执行程序包管理器控制台语句
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;">PM&gt; Update-Database -Verbose</pre>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			<img src="http://localhost:2363/upload/article/20160102134426_3986.png" alt="" style="margin:0px;padding:0px;max-width:1000px;" /> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			Portal控制台应用程序的代码结构：
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			<img src="http://localhost:2363/upload/article/20160102134426_6986.png" alt="" style="margin:0px;padding:0px;max-width:1000px;" /> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			数据库更新成功之后，在数据库中新增表City。
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			<img src="http://localhost:2363/upload/article/20160102134427_4487.png" alt="" style="margin:0px;padding:0px;max-width:1000px;" /> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			2.2、版本回溯
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			修改数据库中表City，删除其中字段ProvinceNo。在程序包管理器控制台中执行以下两条语句：
+		</p>
+		<div class="cnblogs_Highlighter" style="margin:0px;padding:0px;">
+			<div style="margin:0px;padding:0px;">
+				<div id="highlighter_296770" class="syntaxhighlighter nogutter  csharp" style="padding:0px;width:1182.62px;margin:1em 0px !important;position:relative !important;overflow:auto !important;font-size:1em !important;">
+					<table border="0" cellpadding="0" cellspacing="0" style="border:1px solid silver;width:1182.31px;word-break:break-word;margin:0px !important;padding:0px !important;border-radius:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.1em !important;outline:0px !important;overflow:visible !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;background:none !important;" class="ke-zeroborder">
+						<tbody style="margin:0px !important;padding:0px !important;border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.1em !important;outline:0px !important;overflow:visible !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;background:none !important;">
+							<tr style="margin:0px !important;padding:0px !important;border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.1em !important;outline:0px !important;overflow:visible !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;background:none !important;">
+								<td class="code" style="padding:3px;border:1px solid silver;border-collapse:collapse;margin:0px !important;border-radius:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.1em !important;outline:0px !important;overflow:visible !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;min-height:auto !important;background:none !important;">
+									<div class="container" style="margin:0px !important;padding:0px !important;border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.1em !important;outline:0px !important;overflow:visible !important;position:relative !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;background:none !important;">
+										<div class="line number1 index0 alt2" style="margin:0px !important;padding:0px 1em 0px 0px !important;border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;outline:0px !important;overflow:visible !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-size:12px !important;min-height:auto !important;background:none #F4F4F4 !important;">
+											<code class="csharp plain" style="white-space:pre-wrap;margin:0px !important;padding:0px !important;border-radius:0px !important;border:0px !important;bottom:auto !important;float:none !important;height:auto !important;left:auto !important;line-height:1.8em !important;outline:0px !important;overflow:visible !important;position:static !important;right:auto !important;top:auto !important;vertical-align:baseline !important;width:auto !important;box-sizing:content-box !important;font-family:Consolas, 'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace !important;font-size:12px !important;min-height:auto !important;background:none !important;">PM&gt; Add-Migration ModifyCity</code> 
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;">PM&gt; Update-Database -Verbose</pre>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			执行成功之后，City表结构修改为：
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			<img src="http://localhost:2363/upload/article/20160102134427_8177.png" alt="" style="margin:0px;padding:0px;max-width:1000px;" /> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			执行程序包管理器控制台语句，进行数据库版本回溯。
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;">PM&gt; Update-Database –TargetMigration:<span style="margin:0px;padding:0px;color:#800000;font-size:12px !important;line-height:1.5 !important;">"</span><span style="margin:0px;padding:0px;color:#800000;font-size:12px !important;line-height:1.5 !important;">201309201643300_AddCity.cs</span><span style="margin:0px;padding:0px;color:#800000;font-size:12px !important;line-height:1.5 !important;">"</span></pre>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			2.3、生成数据库版本之间的Sql脚本
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			执行程序包管理器控制台语句，生成数据库版本之间的Sql脚本。该操作仅为生成Sql语句，并未在数据库中进行执行。
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;">Update-Database -Script -SourceMigration:<span style="margin:0px;padding:0px;color:#800000;font-size:12px !important;line-height:1.5 !important;">"</span><span style="margin:0px;padding:0px;color:#800000;font-size:12px !important;line-height:1.5 !important;">201309201643300_AddCity.cs</span><span style="margin:0px;padding:0px;color:#800000;font-size:12px !important;line-height:1.5 !important;">"</span> -TargetMigration:<span style="margin:0px;padding:0px;color:#800000;font-size:12px !important;line-height:1.5 !important;">"</span><span style="margin:0px;padding:0px;color:#800000;font-size:12px !important;line-height:1.5 !important;">201309201708043_ModifyCity.cs</span><span style="margin:0px;padding:0px;color:#800000;font-size:12px !important;line-height:1.5 !important;">"</span> </pre>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			其中-TargetMigration在未指定的情况，默认为迁移到最新的版本。
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			<strong style="margin:0px;padding:0px;">3、EF Code First Migrations语句的其他参数</strong> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			1&gt;、为指定的DbContext启用数据库迁移
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;">PM&gt; Enable-Migrations -ContextTypeName Portal.PortalContext</pre>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			2&gt;、设置是否允许自动迁移
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;">Enable-Migrations</pre>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			生成的Configuration.cs类文件的构造函数
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;"><span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">public</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;"> Configuration()
+{
+      AutomaticMigrationsEnabled </span>= <span style="margin:0px;padding:0px;color:#0000FF;font-size:12px !important;line-height:1.5 !important;">false</span><span style="margin:0px;padding:0px;font-size:12px !important;line-height:1.5 !important;">;
+}</span></pre>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			3&gt;、Enable-Migrations指定项目名称
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;">PM&gt; Enable-Migrations -StartUpProjectName Portal</pre>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			如果在“Package Manager Console”中选择了默认项目可以不设置“-StartUpProjectName”参数；如果多次执行此命令可以添加-Force参数。
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			4&gt;、查看所执行的Sql语句 -Verbose指令
+		</p>
+		<div class="cnblogs_code" style="margin:5px 0px;padding:5px;border:1px solid #CCCCCC;overflow:auto;color:#000000;font-family:'Courier New' !important;font-size:12px !important;">
+<pre style="margin:0px;padding:0px;white-space:pre-wrap;word-wrap:break-word;font-family:'Courier New' !important;font-size:12px !important;">Update-Database -Verbose </pre>
+		</div>
+		<p style="margin:10px auto;padding:0px;">
+			<strong style="margin:0px;padding:0px;">4、代码下载</strong> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			<a id="" href="http://files.cnblogs.com/libingql/Portal.zip" style="margin:0px;padding:0px;text-decoration:none;color:#E47911;border-bottom-style:none;">Portal.zip</a> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			<strong style="margin:0px;padding:0px;">5、参考资料</strong> 
+		</p>
+		<p style="margin:10px auto;padding:0px;">
+			<a href="http://msdn.microsoft.com/en-US/data/jj591621" target="_blank" style="margin:0px;padding:0px;text-decoration:none;color:#E47911;border-bottom-style:none;">http://msdn.microsoft.com/en-US/data/jj591621</a> 
+		</p>
+	</div>
+</div></div>
+        <div class="article_tag muted">
+                <a class="grayBoxA" href="http://localhost:2363/zh-tw/tag/EF">EF</a>
+                <a class="grayBoxA" href="http://localhost:2363/zh-tw/tag/code%20first">code first</a>
+                <a class="grayBoxA" href="http://localhost:2363/zh-tw/tag/%e6%95%b0%e6%8d%ae%e8%bf%81%e7%a7%bb">数据迁移</a>
+                <a class="grayBoxA" href="http://localhost:2363/zh-tw/tag/%e7%94%9f%e6%88%90%e6%95%b0%e6%8d%ae%e5%ba%93">生成数据库</a>
+        </div>
+        <div class="vote articlevote clearfix" voteid="2">
+            <ul>
+                <li>頂 :</li>
+                <li class="vote_favor vote_favor_value"></li>
+                <li class="gap"></li>
+                <li>踩 :</li>
+                <li class="vote_against vote_against_value"></li>
+                <li class="vote_tip"></li>
+            </ul>
+        </div>
+        <div class="article_link"></div>
+        <div class="article_comment">
+            <input type="hidden" value="desc" id="CommentOrderType" name="CommentOrderType"/>
+            <div id="commentform">
+                <a name="commentFormA"></a>
+                <h4>發表評論</h4>
+                <div id="commentFormWrap"></div>
+            </div>
+            <a name="commentA"></a>
+            <div id="commentlist">
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" value="" id="current-comment" name="current-comment"/>
+<div id="modalbackdroptrue" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>刪除評論</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            確定刪除選中項?
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-success fl" id="comment-delete-yes">是</a>
+        <a data-dismiss="modal" class="btn btn-danger fl" id="comment-delete-no">否</a>
+    </div>
+</div>
+
+
+        </div>
+        <footer>
+            <div class="container">
+               版权所有  &copy; jeryBlog
+            </div>
+        </footer>
+        
+    <script src="/Scripts/SyntaxHighlighter/scripts/shCore.js" type="text/javascript"></script>
+    <script src="/Scripts/SyntaxHighlighter/scripts/shBrush.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.article_link').html(loadingImgSmall);
+            GetArticleAjaxInfo();
+            GetCommentForm();
+            SyntaxHighlighter.all();
+        });
+    </script>
+
+    
+<!-- Visual Studio Browser Link -->
+<script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Unknown"}
+</script>
+<script type="text/javascript" src="http://localhost:39544/f70bbb0a013a4fe09667f4058ae25e14/browserLink" async="async"></script>
+<!-- End Browser Link -->
+
+</body>
+</html>
